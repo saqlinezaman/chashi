@@ -353,11 +353,11 @@
   <aside id="side">
     <a class="brand" href="{{ route('index') }}"><span class="logo-mark">C</span> Chashi</a>
     <nav>
-      <a href="{{route('index')}}" class="nav-i active"><i class="bi bi-speedometer2"></i>ড্যাশবোর্ড</a>
-      <a href="{{ route('product') }}" data-route="products" class="nav-i"><i class="bi bi-box-seam"></i>পণ্য</a>
+      <a href="{{route('index')}}" class="nav-i {{request()->routeIs('index') ? 'active': ''}} "><i class="bi bi-speedometer2"></i>ড্যাশবোর্ড</a>
+      <a href="{{route('banner')}}" data-route="banners" class="nav-i {{request()->routeIs('banner') ? 'active': ''}} "><i class="bi bi-images"></i>ব্যানার</a>
+      <a href="{{route('product')}}" data-route="products" class="nav-i {{request()->routeIs('product') ? 'active': ''}} "><i class="bi bi-box-seam"></i>পণ্য</a>
       <a href="#" data-route="categories" class="nav-i"><i class="bi bi-grid"></i>ক্যাটাগরি</a>
       <a href="#" data-route="orders" class="nav-i"><i class="bi bi-receipt"></i>অর্ডার</a>
-      <a href="#" data-route="banners" class="nav-i"><i class="bi bi-images"></i>ব্যানার</a>
       <a href="#" data-route="offers" class="nav-i"><i class="bi bi-megaphone"></i>অফার</a>
       <a href="#" data-route="reviews" class="nav-i"><i class="bi bi-chat-quote"></i>রিভিউ</a>
       <a href="#" data-route="settings" class="nav-i"><i class="bi bi-gear"></i>সেটিংস</a>

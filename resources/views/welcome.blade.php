@@ -84,7 +84,7 @@
 </div>
 
 <!-- ================= HEADER ================= -->
-<header class="main-nav py-3">
+<header class="main-nav py-3 sticky-top ">
   <div class="container">
     <div class="row align-items-center g-2">
       <div class="col col-lg-3 order-1">
@@ -101,7 +101,7 @@
         </form>
       </div>
 
-      <div class="col-auto col-lg-3 order-2 order-lg-3 d-flex justify-content-end align-items-center gap-1">
+      <div class="col-auto col-lg-3 order-2 order-lg-3 d-flex justify-content-end align-items-center gap-1 ">
         <!-- Language (Laravel: route /lang/bn, /lang/en) -->
         <div class="btn-group me-1">
           <a href="?lang=bn" class="btn lang-btn active">বাংলা</a>
@@ -117,7 +117,7 @@
         <!-- Cart -->
         <button class="btn btn-accent position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartCanvas" aria-label="Cart">
           <i class="bi bi-cart3"></i>
-          <span id="cartCount" class="badge bg-light text-dark position-absolute top-0 start-100 translate-middle rounded-pill">0</span>
+          <span id="cartCount" class="badge bg-success text-light position-absolute top-0 start-100 translate-middle rounded-pill">0</span>
         </button>
       </div>
     </div>
@@ -204,31 +204,6 @@
   </div>
 </section>
 
-<!-- ================= SPECIAL OFFER / TODAY'S OFFER (image bg) =================
-     Laravel: offers table (title, text, button, link, image, text color) -->
-<section id="offers" class="pb-5">
-  <div class="container">
-    <div class="row g-3">
-      <div class="col-md-6">
-        <div class="offer-card img-bg" style="background-image:url('https://placehold.co/900x500/352638/F2E9DB?text=Special+Offer')">
-          <small class="text-uppercase text-accent">বিশেষ অফার</small>
-          <h3 style="color:#F2E9DB">তেলে ১০% পর্যন্ত ছাড়!</h3>
-          <p style="color:#F2E9DB">সয়াবিন, সরিষা ও রাইস ব্রান তেলে বিশেষ অফার।</p>
-          <div><a href="?category=oil#products" class="btn btn-accent">তেল দেখুন</a></div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="offer-card img-bg" style="background-image:url('https://placehold.co/900x500/65705A/F2E9DB?text=Todays+Offer')">
-          <small class="text-uppercase text-accent">আজকের অফার</small>
-          <h3 style="color:#F2E9DB">সাবান কিনলে ২টায় ১টা ফ্রি*</h3>
-          <p style="color:#F2E9DB">নির্বাচিত সাবান ও ডিটারজেন্টে আকর্ষণীয় ডিল।</p>
-          <div><a href="?category=soap#products" class="btn btn-accent">সাবান দেখুন</a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= PRODUCTS =================
      Laravel: products loop korbe — ekta card-ei sob, filter/sort/search controller-e -->
 <section id="products" class="py-5 bg-white border-top border-bottom border-sec">
@@ -260,106 +235,186 @@
     <div class="row g-3">
 
       <!-- Product card: data-* gulo cart/wishlist JS porbe. Laravel-e shudhu value gulo variable theke bosbe -->
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card-box h-100 p-3 position-relative d-flex flex-column"
-             data-product data-id="1" data-name="সয়াবিন তেল (১ লিটার)" data-price="175" data-img="https://placehold.co/400x300/F2E9DB/352638?text=Soybean+Oil">
-          <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">5% ছাড়</span>
-          <button class="wish-btn js-wish" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
-          <div class="product-img mb-3"><img src="https://placehold.co/400x300/F2E9DB/352638?text=Soybean+Oil" alt="সয়াবিন তেল"></div>
-          <h6 class="mb-2 text-dark fw-medium">সয়াবিন তেল (১ লিটার)</h6>
-          <div class="mb-3"><span class="price fs-5">৳175</span> <del class="text-secondary small">৳185</del></div>
-          <button class="btn btn-brand mt-auto js-add"><i class="bi bi-cart-plus me-1"></i>কার্টে যোগ করুন</button>
-        </div>
-      </div>
+<!-- Card 1 -->
+<div class="col-12 col-md-6 col-lg-6">
+  <div class="card-box h-100 p-0 position-relative overflow-hidden d-flex flex-row"
+       data-product data-id="1" data-name="সয়াবিন তেল (১ লিটার)" data-price="175"
+       data-img="https://placehold.co/400x400/F2E9DB/352638?text=Soybean+Oil">
 
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card-box h-100 p-3 position-relative d-flex flex-column"
-             data-product data-id="3" data-name="সরিষার তেল (১ লিটার)" data-price="290" data-img="https://placehold.co/400x300/F2E9DB/352638?text=Mustard+Oil">
-          <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">6% ছাড়</span>
-          <button class="wish-btn js-wish" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
-          <div class="product-img mb-3"><img src="https://placehold.co/400x300/F2E9DB/352638?text=Mustard+Oil" alt="সরিষার তেল"></div>
-          <h6 class="mb-2 text-dark fw-medium">সরিষার তেল (১ লিটার)</h6>
-          <div class="mb-3"><span class="price fs-5">৳290</span> <del class="text-secondary small">৳310</del></div>
-          <button class="btn btn-brand mt-auto js-add"><i class="bi bi-cart-plus me-1"></i>কার্টে যোগ করুন</button>
-        </div>
-      </div>
+    <div class="position-relative flex-shrink-0" style="width:42%; min-height:210px;">
+      <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">5% ছাড়</span>
+      <img src="https://placehold.co/400x400/F2E9DB/352638?text=Soybean+Oil" alt="সয়াবিন তেল"
+           class="w-100 h-100" style="object-fit:cover;">
+    </div>
 
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card-box h-100 p-3 position-relative d-flex flex-column"
-             data-product data-id="5" data-name="লাক্স সাবান (১টি)" data-price="45" data-img="https://placehold.co/400x300/F2E9DB/352638?text=Lux+Soap">
-          <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">10% ছাড়</span>
-          <button class="wish-btn js-wish" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
-          <div class="product-img mb-3"><img src="https://placehold.co/400x300/F2E9DB/352638?text=Lux+Soap" alt="লাক্স সাবান"></div>
-          <h6 class="mb-2 text-dark fw-medium">লাক্স সাবান (১টি)</h6>
-          <div class="mb-3"><span class="price fs-5">৳45</span> <del class="text-secondary small">৳50</del></div>
-          <button class="btn btn-brand mt-auto js-add"><i class="bi bi-cart-plus me-1"></i>কার্টে যোগ করুন</button>
-        </div>
+    <div class="p-3 d-flex flex-column flex-grow-1 border-start">
+      <div class="d-flex justify-content-between align-items-start mb-1">
+        <small class="text-secondary">তেল</small>
+        <button class="wish-btn js-wish position-static" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
       </div>
+      <h6 class="mb-1 text-dark fw-medium">সয়াবিন তেল (১ লিটার)</h6>
+      <div class="small mb-2" style="color:#C9A86A">
+        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+        <span class="text-secondary ms-1">(৪.৫)</span>
+      </div>
+      <div class="mb-3">
+        <span class="price fs-4">৳175</span>
+        <del class="text-secondary small ms-1">৳185</del>
+      </div>
+      <div class="d-flex gap-2 mt-auto">
+        <button class="btn btn-brand flex-fill js-add" title="কার্টে যোগ করুন">
+          <i class="bi bi-cart-plus"></i><span class="d-none d-sm-inline ms-1">কার্ট</span>
+        </button>
+        <button class="btn btn-accent flex-fill js-buy">
+          <i class="bi bi-lightning-charge-fill me-1"></i>এখনই কিনুন
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card-box h-100 p-3 position-relative d-flex flex-column"
-             data-product data-id="7" data-name="ডিটারজেন্ট পাউডার (১ কেজি)" data-price="130" data-img="https://placehold.co/400x300/F2E9DB/352638?text=Detergent">
-          <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">10% ছাড়</span>
-          <button class="wish-btn js-wish" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
-          <div class="product-img mb-3"><img src="https://placehold.co/400x300/F2E9DB/352638?text=Detergent" alt="ডিটারজেন্ট পাউডার"></div>
-          <h6 class="mb-2 text-dark fw-medium">ডিটারজেন্ট পাউডার (১ কেজি)</h6>
-          <div class="mb-3"><span class="price fs-5">৳130</span> <del class="text-secondary small">৳145</del></div>
-          <button class="btn btn-brand mt-auto js-add"><i class="bi bi-cart-plus me-1"></i>কার্টে যোগ করুন</button>
-        </div>
-      </div>
+<!-- Card 2 -->
+<div class="col-12 col-md-6 col-lg-6">
+  <div class="card-box h-100 p-0 position-relative overflow-hidden d-flex flex-row"
+       data-product data-id="2" data-name="মসুর ডাল (১ কেজি)" data-price="120"
+       data-img="https://placehold.co/400x400/E8DCC4/352638?text=Masoor+Dal">
 
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card-box h-100 p-3 position-relative d-flex flex-column"
-             data-product data-id="9" data-name="মিনিকেট চাল (৫ কেজি)" data-price="380" data-img="https://placehold.co/400x300/F2E9DB/352638?text=Miniket+Rice">
-          <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">5% ছাড়</span>
-          <button class="wish-btn js-wish" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
-          <div class="product-img mb-3"><img src="https://placehold.co/400x300/F2E9DB/352638?text=Miniket+Rice" alt="মিনিকেট চাল"></div>
-          <h6 class="mb-2 text-dark fw-medium">মিনিকেট চাল (৫ কেজি)</h6>
-          <div class="mb-3"><span class="price fs-5">৳380</span> <del class="text-secondary small">৳400</del></div>
-          <button class="btn btn-brand mt-auto js-add"><i class="bi bi-cart-plus me-1"></i>কার্টে যোগ করুন</button>
-        </div>
-      </div>
+    <div class="position-relative flex-shrink-0" style="width:42%; min-height:210px;">
+      <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">8% ছাড়</span>
+      <img src="https://placehold.co/400x400/E8DCC4/352638?text=Masoor+Dal" alt="মসুর ডাল"
+           class="w-100 h-100" style="object-fit:cover;">
+    </div>
 
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card-box h-100 p-3 position-relative d-flex flex-column"
-             data-product data-id="10" data-name="মসুর ডাল (১ কেজি)" data-price="140" data-img="https://placehold.co/400x300/F2E9DB/352638?text=Red+Lentil">
-          <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">7% ছাড়</span>
-          <button class="wish-btn js-wish" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
-          <div class="product-img mb-3"><img src="https://placehold.co/400x300/F2E9DB/352638?text=Red+Lentil" alt="মসুর ডাল"></div>
-          <h6 class="mb-2 text-dark fw-medium">মসুর ডাল (১ কেজি)</h6>
-          <div class="mb-3"><span class="price fs-5">৳140</span> <del class="text-secondary small">৳150</del></div>
-          <button class="btn btn-brand mt-auto js-add"><i class="bi bi-cart-plus me-1"></i>কার্টে যোগ করুন</button>
-        </div>
+    <div class="p-3 d-flex flex-column flex-grow-1 border-start">
+      <div class="d-flex justify-content-between align-items-start mb-1">
+        <small class="text-secondary">ডাল</small>
+        <button class="wish-btn js-wish position-static" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
       </div>
+      <h6 class="mb-1 text-dark fw-medium">মসুর ডাল (১ কেজি)</h6>
+      <div class="small mb-2" style="color:#C9A86A">
+        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+        <span class="text-secondary ms-1">(৪.০)</span>
+      </div>
+      <div class="mb-3">
+        <span class="price fs-4">৳120</span>
+        <del class="text-secondary small ms-1">৳130</del>
+      </div>
+      <div class="d-flex gap-2 mt-auto">
+        <button class="btn btn-brand flex-fill js-add" title="কার্টে যোগ করুন">
+          <i class="bi bi-cart-plus"></i><span class="d-none d-sm-inline ms-1">কার্ট</span>
+        </button>
+        <button class="btn btn-accent flex-fill js-buy">
+          <i class="bi bi-lightning-charge-fill me-1"></i>এখনই কিনুন
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card-box h-100 p-3 position-relative d-flex flex-column"
-             data-product data-id="13" data-name="হলুদ গুঁড়া (১০০ গ্রাম)" data-price="45" data-img="https://placehold.co/400x300/F2E9DB/352638?text=Turmeric">
-          <button class="wish-btn js-wish" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
-          <div class="product-img mb-3"><img src="https://placehold.co/400x300/F2E9DB/352638?text=Turmeric" alt="হলুদ গুঁড়া"></div>
-          <h6 class="mb-2 text-dark fw-medium">হলুদ গুঁড়া (১০০ গ্রাম)</h6>
-          <div class="mb-3"><span class="price fs-5">৳45</span></div>
-          <button class="btn btn-brand mt-auto js-add"><i class="bi bi-cart-plus me-1"></i>কার্টে যোগ করুন</button>
-        </div>
-      </div>
+<!-- Card 3 -->
+<div class="col-12 col-md-6 col-lg-6">
+  <div class="card-box h-100 p-0 position-relative overflow-hidden d-flex flex-row"
+       data-product data-id="3" data-name="মিনিকেট চাল (৫ কেজি)" data-price="360"
+       data-img="https://placehold.co/400x400/F2E9DB/6B7F5E?text=Rice+5kg">
 
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card-box h-100 p-3 position-relative d-flex flex-column"
-             data-product data-id="17" data-name="চা পাতা (২৫০ গ্রাম)" data-price="130" data-img="https://placehold.co/400x300/F2E9DB/352638?text=Tea+Leaves">
-          <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">7% ছাড়</span>
-          <button class="wish-btn js-wish" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
-          <div class="product-img mb-3"><img src="https://placehold.co/400x300/F2E9DB/352638?text=Tea+Leaves" alt="চা পাতা"></div>
-          <h6 class="mb-2 text-dark fw-medium">চা পাতা (২৫০ গ্রাম)</h6>
-          <div class="mb-3"><span class="price fs-5">৳130</span> <del class="text-secondary small">৳140</del></div>
-          <button class="btn btn-brand mt-auto js-add"><i class="bi bi-cart-plus me-1"></i>কার্টে যোগ করুন</button>
-        </div>
+    <div class="position-relative flex-shrink-0" style="width:42%; min-height:210px;">
+      <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">3% ছাড়</span>
+      <img src="https://placehold.co/400x400/F2E9DB/6B7F5E?text=Rice+5kg" alt="মিনিকেট চাল"
+           class="w-100 h-100" style="object-fit:cover;">
+    </div>
+
+    <div class="p-3 d-flex flex-column flex-grow-1 border-start">
+      <div class="d-flex justify-content-between align-items-start mb-1">
+        <small class="text-secondary">চাল</small>
+        <button class="wish-btn js-wish position-static" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
       </div>
+      <h6 class="mb-1 text-dark fw-medium">মিনিকেট চাল (৫ কেজি)</h6>
+      <div class="small mb-2" style="color:#C9A86A">
+        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+        <span class="text-secondary ms-1">(৫.০)</span>
+      </div>
+      <div class="mb-3">
+        <span class="price fs-4">৳360</span>
+        <del class="text-secondary small ms-1">৳375</del>
+      </div>
+      <div class="d-flex gap-2 mt-auto">
+        <button class="btn btn-brand flex-fill js-add" title="কার্টে যোগ করুন">
+          <i class="bi bi-cart-plus"></i><span class="d-none d-sm-inline ms-1">কার্ট</span>
+        </button>
+        <button class="btn btn-accent flex-fill js-buy">
+          <i class="bi bi-lightning-charge-fill me-1"></i>এখনই কিনুন
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Card 4 -->
+<div class="col-12 col-md-6 col-lg-6">
+  <div class="card-box h-100 p-0 position-relative overflow-hidden d-flex flex-row"
+       data-product data-id="4" data-name="লাক্স সাবান (৪ পিস)" data-price="140"
+       data-img="https://placehold.co/400x400/E8DCC4/6B7F5E?text=Soap+Pack">
+
+    <div class="position-relative flex-shrink-0" style="width:42%; min-height:210px;">
+      <span class="badge badge-off position-absolute top-0 start-0 m-2" style="z-index:2">10% ছাড়</span>
+      <img src="https://placehold.co/400x400/E8DCC4/6B7F5E?text=Soap+Pack" alt="লাক্স সাবান"
+           class="w-100 h-100" style="object-fit:cover;">
+    </div>
+
+    <div class="p-3 d-flex flex-column flex-grow-1 border-start">
+      <div class="d-flex justify-content-between align-items-start mb-1">
+        <small class="text-secondary">সাবান</small>
+        <button class="wish-btn js-wish position-static" aria-label="Wishlist"><i class="bi bi-heart"></i></button>
+      </div>
+      <h6 class="mb-1 text-dark fw-medium">লাক্স সাবান (৪ পিস)</h6>
+      <div class="small mb-2" style="color:#C9A86A">
+        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i><i class="bi bi-star"></i>
+        <span class="text-secondary ms-1">(৩.৫)</span>
+      </div>
+      <div class="mb-3">
+        <span class="price fs-4">৳140</span>
+        <del class="text-secondary small ms-1">৳155</del>
+      </div>
+      <div class="d-flex gap-2 mt-auto">
+        <button class="btn btn-brand flex-fill js-add" title="কার্টে যোগ করুন">
+          <i class="bi bi-cart-plus"></i><span class="d-none d-sm-inline ms-1">কার্ট</span>
+        </button>
+        <button class="btn btn-accent flex-fill js-buy">
+          <i class="bi bi-lightning-charge-fill me-1"></i>এখনই কিনুন
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
     </div>
     <!-- Laravel: product na thakle empty message dekhabe -->
   </div>
 </section>
-
+<!-- ================= SPECIAL OFFER / TODAY'S OFFER (image bg) =================
+     Laravel: offers table (title, text, button, link, image, text color) -->
+<section id="offers" class="pb-5">
+  <div class="container">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="offer-card img-bg" style="background-image:url('https://placehold.co/900x500/352638/F2E9DB?text=Special+Offer')">
+          <small class="text-uppercase text-accent">বিশেষ অফার</small>
+          <h3 style="color:#F2E9DB">তেলে ১০% পর্যন্ত ছাড়!</h3>
+          <p style="color:#F2E9DB">সয়াবিন, সরিষা ও রাইস ব্রান তেলে বিশেষ অফার।</p>
+          <div><a href="?category=oil#products" class="btn btn-accent">তেল দেখুন</a></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="offer-card img-bg" style="background-image:url('https://placehold.co/900x500/65705A/F2E9DB?text=Todays+Offer')">
+          <small class="text-uppercase text-accent">আজকের অফার</small>
+          <h3 style="color:#F2E9DB">সাবান কিনলে ২টায় ১টা ফ্রি*</h3>
+          <p style="color:#F2E9DB">নির্বাচিত সাবান ও ডিটারজেন্টে আকর্ষণীয় ডিল।</p>
+          <div><a href="?category=soap#products" class="btn btn-accent">সাবান দেখুন</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ================= REVIEWS (Laravel: reviews table) ================= -->
 <section id="reviews" class="py-5">
   <div class="container">
