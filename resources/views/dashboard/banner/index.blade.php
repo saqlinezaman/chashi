@@ -36,44 +36,21 @@
 
             <tbody>
 
+                @foreach ($banners as $banner)
                 <tr>
-                    <td><img class="thumb" src="https://placehold.co/120x60" alt="ব্যানার ১"></td>
-                    <td>বিশ্বস্ত মুদি দোকান</td>
-                    <td>এখনই কিনুন</td>
-                    <td><b>১</b></td>
+                        
+                    <td><img class="thumb" src="{{ $banner->image }}" alt="{{ $banner->title }}"></td>
+                    <td>{{ $banner->title }}</td>
+                    <td>{{ $banner->button_text }}</td>
+                    <td><b>{{ $banner->order }}</b></td>
                     <td><span class="badge bg-success">সক্রিয়</span></td>
                     <td class="text-end text-nowrap">
-                        <button class="btn btn-sm btn-outline-brand" title="দেখুন" data-bs-toggle="modal" data-bs-target="#viewModal" data-title="বিশ্বস্ত মুদি দোকান" data-subtitle="প্রতিদিনের বাজার, এক জায়গায়।" data-button="এখনই কিনুন" data-link="/products" data-order="১" data-status="সক্রিয়" data-image="https://placehold.co/120x60"><i class="bi bi-eye"></i></button>
-                        <button class="btn btn-sm btn-outline-brand" title="এডিট" data-bs-toggle="modal" data-bs-target="#editModal" data-title="বিশ্বস্ত মুদি দোকান" data-subtitle="প্রতিদিনের বাজার, এক জায়গায়।" data-button="এখনই কিনুন" data-link="/products" data-order="1" data-status="1" data-image="https://placehold.co/120x60"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm btn-outline-brand" title="দেখুন" data-bs-toggle="modal" data-bs-target="#viewModal" data-title="{{ $banner->title }}" data-subtitle="{{ $banner->subtitle }}" data-button="{{ $banner->button_text }}" data-link="{{ $banner->button_link }}" data-order="{{ $banner->order }}" data-status="{{ $banner->is_active ? 'সক্রিয়' : 'নিষ্ক্রিয়' }}" data-image="{{ $banner->image }}"><i class="bi bi-eye"></i></button>
+                        <button class="btn btn-sm btn-outline-brand" title="এডিট" data-bs-toggle="modal" data-bs-target="#editModal" data-title="{{ $banner->title }}" data-subtitle="{{ $banner->subtitle }}" data-button="{{ $banner->button_text }}" data-link="{{ $banner->button_link }}" data-order="{{ $banner->order }}" data-status="{{ $banner->is_active }}" data-image="{{ $banner->image }}"><i class="bi bi-pencil"></i></button>
                         <button class="btn btn-sm btn-outline-brand" title="ডিলিট" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash"></i></button>
                     </td>
                 </tr>
-
-                <tr>
-                    <td><img class="thumb" src="https://placehold.co/120x60" alt="ব্যানার ২"></td>
-                    <td>তেলে ১০% পর্যন্ত ছাড়!</td>
-                    <td>তেল দেখুন</td>
-                    <td><b>২</b></td>
-                    <td><span class="badge bg-success">সক্রিয়</span></td>
-                    <td class="text-end text-nowrap">
-                        <button class="btn btn-sm btn-outline-brand" title="দেখুন" data-bs-toggle="modal" data-bs-target="#viewModal" data-title="তেলে ১০% পর্যন্ত ছাড়!" data-subtitle="সয়াবিন, সরিষা ও রাইস ব্রান তেলে বিশেষ অফার।" data-button="তেল দেখুন" data-link="/category/oil" data-order="২" data-status="সক্রিয়" data-image="https://placehold.co/120x60"><i class="bi bi-eye"></i></button>
-                        <button class="btn btn-sm btn-outline-brand" title="এডিট" data-bs-toggle="modal" data-bs-target="#editModal" data-title="তেলে ১০% পর্যন্ত ছাড়!" data-subtitle="সয়াবিন, সরিষা ও রাইস ব্রান তেলে বিশেষ অফার।" data-button="তেল দেখুন" data-link="/category/oil" data-order="2" data-status="1" data-image="https://placehold.co/120x60"><i class="bi bi-pencil"></i></button>
-                        <button class="btn btn-sm btn-outline-brand" title="ডিলিট" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash"></i></button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td><img class="thumb" src="https://placehold.co/120x60" alt="ব্যানার ৩"></td>
-                    <td>সাবানে বিশেষ ছাড়</td>
-                    <td>সাবান দেখুন</td>
-                    <td><b>৩</b></td>
-                    <td><span class="badge bg-secondary">নিষ্ক্রিয়</span></td>
-                    <td class="text-end text-nowrap">
-                        <button class="btn btn-sm btn-outline-brand" title="দেখুন" data-bs-toggle="modal" data-bs-target="#viewModal" data-title="সাবানে বিশেষ ছাড়" data-subtitle="সব ব্র্যান্ডের সাবানে আকর্ষণীয় দাম।" data-button="সাবান দেখুন" data-link="/category/soap" data-order="৩" data-status="নিষ্ক্রিয়" data-image="https://placehold.co/120x60"><i class="bi bi-eye"></i></button>
-                        <button class="btn btn-sm btn-outline-brand" title="এডিট" data-bs-toggle="modal" data-bs-target="#editModal" data-title="সাবানে বিশেষ ছাড়" data-subtitle="সব ব্র্যান্ডের সাবানে আকর্ষণীয় দাম।" data-button="সাবান দেখুন" data-link="/category/soap" data-order="3" data-status="0" data-image="https://placehold.co/120x60"><i class="bi bi-pencil"></i></button>
-                        <button class="btn btn-sm btn-outline-brand" title="ডিলিট" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash"></i></button>
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -84,7 +61,7 @@
 {{-- Add Modal --}}
 <div class="modal fade" id="addModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <form class="modal-content" method="POST" action="#" enctype="multipart/form-data">
+        <form class="modal-content" method="POST" action="{{ route('banner.store') }}" enctype="multipart/form-data">
             @csrf
 
             <div class="modal-header">
@@ -100,13 +77,13 @@
                     <div class="col-12">
                         <label class="form-label">শিরোনাম *</label>
                         <input type="text" name="title" class="form-control"
-                            placeholder="যেমন: তেলে ১০% পর্যন্ত ছাড়!" required>
+                         value="{{ old('title') }}"   placeholder="যেমন: তেলে ১০% পর্যন্ত ছাড়!">
                     </div>
 
                     <div class="col-12">
                         <label class="form-label">উপশিরোনাম</label>
                         <textarea name="subtitle" class="form-control" rows="2"
-                            placeholder="সংক্ষিপ্ত বিবরণ লিখুন"></textarea>
+                         value="{{ old('subtitle') }}"   placeholder="সংক্ষিপ্ত বিবরণ লিখুন"></textarea>
                     </div>
                 </div>
 
@@ -118,13 +95,13 @@
                     <div class="col-md-6">
                         <label class="form-label">বাটনের লেখা</label>
                         <input type="text" name="button_text" class="form-control"
-                            placeholder="যেমন: তেল দেখুন">
+                         value="{{ old('button_text') }}"   placeholder="যেমন: তেল দেখুন">
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">বাটনের লিংক</label>
                         <input type="text" name="button_link" class="form-control"
-                            placeholder="যেমন: /category/oil">
+                            value="{{ old('button_link') }}"   placeholder="যেমন: /category/oil">
                     </div>
                 </div>
 
@@ -134,7 +111,11 @@
 
                 <div class="mb-3">
                     <label class="form-label">Banner Image *</label>
-                    <input type="file" name="image" class="form-control" accept="image/*" required>
+                    <input type="file" name="image" class="form-control" accept="image/*">
+                    @error('image')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                
                     <div class="form-text">প্রস্তাবিত সাইজ: 1920 × 600 px</div>
                 </div>
 
@@ -143,11 +124,6 @@
                 <h6 class="fw-bold mb-3">অতিরিক্ত সেটিংস</h6>
 
                 <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label">ক্রম (Order)</label>
-                        <input type="number" name="sort_order" class="form-control" min="0" value="1">
-                    </div>
-
                     <div class="col-md-6 d-flex align-items-end">
                         <div class="form-check">
                             <input type="checkbox" name="is_active" value="1"
@@ -300,6 +276,7 @@ document.addEventListener('show.bs.modal', function (e) {
         document.getElementById('editImage').src = btn.dataset.image;
     }
 });
+
 </script>
 
 @endsection

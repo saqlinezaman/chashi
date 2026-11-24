@@ -53,7 +53,7 @@
     .img-bg > * { position: relative; }
 
     .carousel-item { transition: none; }
-    .banner-inner { min-height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 2rem; padding-bottom: 3rem; }
+    .banner-inner { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 2rem; padding-bottom: 3rem; }
     .carousel-indicators [data-bs-target] { background-color: var(--accent); }
     .banner-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--accent); color: var(--text); }
     .banner-arrow.prev { left: 1rem; }
@@ -138,59 +138,67 @@
 <!-- ================= BANNER SLIDER =================
      Laravel: banners loop korbe — bg = image, text/button color DB theke -->
 <section id="home">
-  <div id="bannerCarousel" class="carousel slide position-relative" data-bs-ride="carousel" data-bs-interval="5000">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active"></button>
-      <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="2"></button>
+
+    <div id="bannerCarousel"
+         class="carousel slide position-relative"
+         data-bs-ride="carousel"
+         data-bs-interval="5000">
+
+        {{-- Carousel Indicators --}}
+        <div class="carousel-indicators">
+
+            @foreach ($banners as $key => $banner)
+
+                <button type="button"
+                    data-bs-target="#bannerCarousel"
+                    data-bs-slide-to="{{ $key }}"
+                    class="{{ $key == 0 ? 'active' : '' }}"
+                    aria-current="{{ $key == 0 ? 'true' : 'false' }}"
+                    aria-label="Slide {{ $key + 1 }}">
+                </button>
+
+            @endforeach
+
+        </div>
+
+        {{-- Carousel Items --}}
+        <div class="carousel-inner">
+
+            @foreach ($banners as $key => $banner)
+
+                <div class="carousel-item img-bg {{ $key == 0 ? 'active' : '' }}"
+                     style="background-image: url('{{ asset($banner->image) }}')">
+
+                    <div class="container banner-inner">
+
+                        <h1 class="display-5 fw-bold" style="color:#D5B77A">
+                            {{ $banner->title }}
+                        </h1>
+
+                        <p class="lead" style="color:#F2E9DB">
+                            {{ $banner->subtitle }}
+                        </p>
+
+                        @if ($banner->button_text && $banner->button_link)
+                            <a href="{{ $banner->button_link }}"
+                               class="btn btn-lg btn-accent">
+                                {{ $banner->button_text }}
+                            </a>
+                        @endif
+
+                    </div>
+
+                </div>
+
+            @endforeach
+
+        </div>
     </div>
 
-    <div class="carousel-inner">
-      <div class="carousel-item active img-bg" style="background-image:url('https://placehold.co/1600x700/352638/F2E9DB?text=Banner+1')">
-        <div class="container banner-inner">
-          <h1 class="display-5 fw-bold" style="color:#D5B77A">তেল, সাবান আর সব মুদি সামগ্রী এক জায়গায়</h1>
-          <p class="lead" style="color:#F2E9DB">ভালো দাম, খাঁটি মান, আর দ্রুত হোম ডেলিভারি।</p>
-          <a href="#products" class="btn btn-lg btn-accent">এখনই কিনুন</a>
-        </div>
-      </div>
-
-      <div class="carousel-item img-bg" style="background-image:url('https://placehold.co/1600x700/65705A/F2E9DB?text=Banner+2')">
-        <div class="container banner-inner">
-          <h1 class="display-5 fw-bold" style="color:#F2E9DB">তেলে ১০% পর্যন্ত ছাড়!</h1>
-          <p class="lead" style="color:#F2E9DB">সয়াবিন, সরিষা ও রাইস ব্রান তেলে বিশেষ অফার।</p>
-          <a href="?category=oil#products" class="btn btn-lg btn-accent">তেল দেখুন</a>
-        </div>
-      </div>
-
-      <div class="carousel-item img-bg" style="background-image:url('https://placehold.co/1600x700/B9A0A9/28252A?text=Banner+3')">
-        <div class="container banner-inner">
-          <h1 class="display-5 fw-bold" style="color:#F2E9DB">প্রতিদিনের সাবান ও ক্লিনিং সামগ্রী</h1>
-          <p class="lead" style="color:#F2E9DB">লাক্স, ডেটল, ডিটারজেন্ট — সবই এক দোকানে।</p>
-          <a href="?category=soap#products" class="btn btn-lg btn-accent">সাবান দেখুন</a>
-        </div>
-      </div>
-    </div>
-
-    <button class="banner-arrow prev" data-bs-target="#bannerCarousel" data-bs-slide="prev" aria-label="Previous"><i class="bi bi-chevron-left"></i></button>
-    <button class="banner-arrow next" data-bs-target="#bannerCarousel" data-bs-slide="next" aria-label="Next"><i class="bi bi-chevron-right"></i></button>
-  </div>
 </section>
-
-<!-- ================= FEATURES ================= -->
-<section class="py-4 bg-white border-bottom border-sec">
-  <div class="container">
-    <div class="row g-3 text-center">
-      <div class="col-6 col-md-3"><i class="bi bi-truck feature-icon"></i><div class="fw-semibold">হোম ডেলিভারি</div><small class="text-secondary">দ্রুত ও নিরাপদ</small></div>
-      <div class="col-6 col-md-3"><i class="bi bi-patch-check feature-icon"></i><div class="fw-semibold">খাঁটি মান</div><small class="text-secondary">১০০% অরিজিনাল</small></div>
-      <div class="col-6 col-md-3"><i class="bi bi-cash-coin feature-icon"></i><div class="fw-semibold">ন্যায্য দাম</div><small class="text-secondary">বাজারের সেরা</small></div>
-      <div class="col-6 col-md-3"><i class="bi bi-arrow-repeat feature-icon"></i><div class="fw-semibold">সহজ রিটার্ন</div><small class="text-secondary">সমস্যা হলে ফেরত</small></div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= CATEGORIES =================
      Laravel: categories loop korbe -->
-<section id="categories" class="py-5">
+<section id="categories" class="py-4">
   <div class="container">
     <h2 class="mb-4">ক্যাটাগরি অনুযায়ী কিনুন</h2>
     <div class="row g-3">
@@ -203,6 +211,19 @@
     </div>
   </div>
 </section>
+<!-- ================= FEATURES ================= -->
+<section class="py-4 bg-white border-bottom border-sec">
+  <div class="container">
+    <div class="row g-3 text-center">
+      <div class="col-6 col-md-3"><i class="bi bi-truck feature-icon"></i><div class="fw-semibold">হোম ডেলিভারি</div><small class="text-secondary">দ্রুত ও নিরাপদ</small></div>
+      <div class="col-6 col-md-3"><i class="bi bi-patch-check feature-icon"></i><div class="fw-semibold">খাঁটি মান</div><small class="text-secondary">১০০% অরিজিনাল</small></div>
+      <div class="col-6 col-md-3"><i class="bi bi-cash-coin feature-icon"></i><div class="fw-semibold">ন্যায্য দাম</div><small class="text-secondary">বাজারের সেরা</small></div>
+      <div class="col-6 col-md-3"><i class="bi bi-arrow-repeat feature-icon"></i><div class="fw-semibold">সহজ রিটার্ন</div><small class="text-secondary">সমস্যা হলে ফেরত</small></div>
+    </div>
+  </div>
+</section>
+
+
 
 <!-- ================= PRODUCTS =================
      Laravel: products loop korbe — ekta card-ei sob, filter/sort/search controller-e -->
