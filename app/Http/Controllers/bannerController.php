@@ -9,19 +9,17 @@ use Illuminate\Support\Str;
 
 class bannerController extends Controller
 {
-    public function index(){
-        $banners = Banner::all();
-        return view('dashboard.banner.index' , compact('banners'));
+    public function index()
+    {
+        $banners = Banner::latest()->paginate(5);
+        return view('dashboard.banner.index', compact('banners'));
     }
-    public function store(Request $request){
-    
-    // $validated= $request->validate([
-    //         'title' => 'nullable|string|max:255',
-    //         'subtitle' => 'nullable|string|max:255',
-    //         'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:40960',
-    //         'button_text' => 'nullable|string|max:255',
-    //         'button_link' => 'nullable|url|max:255',
-    //     ]);
+    public function store(Request $request)
+    {
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
 
         $banner = new Banner;
         $banner->title = $request->title;
@@ -37,5 +35,46 @@ class bannerController extends Controller
         $banner->save();
 
         return redirect('banner')->with('success', 'Banner created successfully.');
+    }
+    public function update(Request $request, $id)
+    {
+        $banner = Banner::findOrFail($id);
+
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if (File::exists(public_path($banner->image))) {
+                File::delete(public_path($banner->image));
+            }
+
+            $folderPath = public_path('images/banners');
+            File::ensureDirectoryExists($folderPath);
+            $imageName = 'banner_' . time() . Str::uuid() . '.' . $request->image->extension();
+            $request->image->move($folderPath, $imageName);
+            $banner->image = 'images/banners/' . $imageName;
+        }
+
+        $banner->title = $request->title;
+        $banner->subtitle = $request->subtitle;
+        $banner->button_text = $request->button_text;
+        $banner->button_link = $request->button_link;
+      $banner->is_active = (int) $request->input('is_active', 0);
+        $banner->save();
+
+        return redirect('banner')->with('success', 'Banner updated successfully.');
+    }
+    public function destroy($id)
+    {
+        $banner = Banner::findOrFail($id);
+         $imagePath = public_path($banner->image);
+
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+        $banner->delete();
+        return redirect()->back()->with('success', 'Banner deleted successfully.');
     }
 }

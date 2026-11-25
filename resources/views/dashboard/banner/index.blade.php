@@ -28,7 +28,6 @@
                     <th>ছবি</th>
                     <th>শিরোনাম</th>
                     <th>বাটন</th>
-                    <th>ক্রম</th>
                     <th>স্ট্যাটাস</th>
                     <th class="text-end">অ্যাকশন</th>
                 </tr>
@@ -38,16 +37,25 @@
 
                 @foreach ($banners as $banner)
                 <tr>
-                        
+
                     <td><img class="thumb" src="{{ $banner->image }}" alt="{{ $banner->title }}"></td>
                     <td>{{ $banner->title }}</td>
                     <td>{{ $banner->button_text }}</td>
-                    <td><b>{{ $banner->order }}</b></td>
-                    <td><span class="badge bg-success">সক্রিয়</span></td>
+                    <td>
+                        <span class="badge {{ $banner->is_active ? 'bg-success' : 'bg-danger' }}">
+                            {{ $banner->is_active ? 'সক্রিয়' : 'নিষ্ক্রিয়' }}
+                        </span>
+                    </td>
                     <td class="text-end text-nowrap">
-                        <button class="btn btn-sm btn-outline-brand" title="দেখুন" data-bs-toggle="modal" data-bs-target="#viewModal" data-title="{{ $banner->title }}" data-subtitle="{{ $banner->subtitle }}" data-button="{{ $banner->button_text }}" data-link="{{ $banner->button_link }}" data-order="{{ $banner->order }}" data-status="{{ $banner->is_active ? 'সক্রিয়' : 'নিষ্ক্রিয়' }}" data-image="{{ $banner->image }}"><i class="bi bi-eye"></i></button>
-                        <button class="btn btn-sm btn-outline-brand" title="এডিট" data-bs-toggle="modal" data-bs-target="#editModal" data-title="{{ $banner->title }}" data-subtitle="{{ $banner->subtitle }}" data-button="{{ $banner->button_text }}" data-link="{{ $banner->button_link }}" data-order="{{ $banner->order }}" data-status="{{ $banner->is_active }}" data-image="{{ $banner->image }}"><i class="bi bi-pencil"></i></button>
-                        <button class="btn btn-sm btn-outline-brand" title="ডিলিট" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash"></i></button>
+                        <button class="btn btn-sm btn-outline-brand" title="দেখুন" data-bs-toggle="modal" data-bs-target="#viewModal" data-title="{{ $banner->title }}" data-subtitle="{{ $banner->subtitle }}" data-button="{{ $banner->button_text }}" data-link="{{ $banner->button_link }}" data-order="{{ $banner->order }}" data-status="{{ $banner->is_active ? 'সক্রিয়' : 'নিষ্ক্রিয়' }}" data-image="{{ $banner->image }}">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-brand" title="এডিট" data-bs-toggle="modal" data-bs-target="#editModal{{ $banner->id }}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-brand" title="ডিলিট" data-bs-toggle="modal" data-bs-target="#delModal{{ $banner->id }}">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </td>
                 </tr>
                 @endforeach
@@ -56,12 +64,23 @@
     </div>
 
 </div>
+<div class=" justify-content-end py-2">
+    {{ $banners->links() }}
+</div>
+
+
 
 
 {{-- Add Modal --}}
 <div class="modal fade" id="addModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <form class="modal-content" method="POST" action="{{ route('banner.store') }}" enctype="multipart/form-data">
+
+        <form id="bannerForm"
+            class="modal-content"
+            method="POST"
+            action="{{ route('banner.store') }}"
+            enctype="multipart/form-data">
+
             @csrf
 
             <div class="modal-header">
@@ -76,14 +95,19 @@
                 <div class="row g-3 mb-3">
                     <div class="col-12">
                         <label class="form-label">শিরোনাম *</label>
-                        <input type="text" name="title" class="form-control"
-                         value="{{ old('title') }}"   placeholder="যেমন: তেলে ১০% পর্যন্ত ছাড়!">
+                        <input type="text"
+                            name="title"
+                            class="form-control"
+                            value="{{ old('title') }}"
+                            placeholder="যেমন: তেলে ১০% পর্যন্ত ছাড়!">
                     </div>
 
                     <div class="col-12">
                         <label class="form-label">উপশিরোনাম</label>
-                        <textarea name="subtitle" class="form-control" rows="2"
-                         value="{{ old('subtitle') }}"   placeholder="সংক্ষিপ্ত বিবরণ লিখুন"></textarea>
+                        <textarea name="subtitle"
+                            class="form-control"
+                            rows="2"
+                            placeholder="সংক্ষিপ্ত বিবরণ লিখুন">{{ old('subtitle') }}</textarea>
                     </div>
                 </div>
 
@@ -94,14 +118,20 @@
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-label">বাটনের লেখা</label>
-                        <input type="text" name="button_text" class="form-control"
-                         value="{{ old('button_text') }}"   placeholder="যেমন: তেল দেখুন">
+                        <input type="text"
+                            name="button_text"
+                            class="form-control"
+                            value="{{ old('button_text') }}"
+                            placeholder="যেমন: তেল দেখুন">
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">বাটনের লিংক</label>
-                        <input type="text" name="button_link" class="form-control"
-                            value="{{ old('button_link') }}"   placeholder="যেমন: /category/oil">
+                        <input type="text"
+                            name="button_link"
+                            class="form-control"
+                            value="{{ old('button_link') }}"
+                            placeholder="যেমন: /category/oil">
                     </div>
                 </div>
 
@@ -110,13 +140,16 @@
                 <h6 class="fw-bold mb-3">ব্যানারের ছবি</h6>
 
                 <div class="mb-3">
-                    <label class="form-label">Banner Image *</label>
-                    <input type="file" name="image" class="form-control" accept="image/*">
-                    @error('image')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                
-                    <div class="form-text">প্রস্তাবিত সাইজ: 1920 × 600 px</div>
+                    <input type="file"
+                        name="image"
+                        class="form-control"
+                        accept="image/*">
+
+                    <div class="text-danger small image-error"></div>
+
+                    <div class="form-text">
+                        প্রস্তাবিত সাইজ: 1920 × 600 px
+                    </div>
                 </div>
 
                 <hr>
@@ -126,9 +159,16 @@
                 <div class="row g-3">
                     <div class="col-md-6 d-flex align-items-end">
                         <div class="form-check">
-                            <input type="checkbox" name="is_active" value="1"
-                                class="form-check-input" id="isActive" checked>
-                            <label class="form-check-label" for="isActive">Active Status</label>
+                            <input type="checkbox"
+                                name="is_active"
+                                value="1"
+                                class="form-check-input"
+                                id="isActive"
+                                checked>
+
+                            <label class="form-check-label" for="isActive">
+                                Active Status
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -136,14 +176,20 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-brand" data-bs-dismiss="modal">বাতিল</button>
-                <button type="submit" class="btn btn-brand">সংরক্ষণ করুন</button>
+                <button type="button"
+                    class="btn btn-outline-brand"
+                    data-bs-dismiss="modal">
+                    বাতিল
+                </button>
+
+                <button type="submit" class="btn btn-brand">
+                    সংরক্ষণ করুন
+                </button>
             </div>
 
         </form>
     </div>
 </div>
-
 
 {{-- View Modal --}}
 <div class="modal fade" id="viewModal" tabindex="-1">
@@ -175,9 +221,10 @@
 
 
 {{-- Edit Modal --}}
-<div class="modal fade" id="editModal" tabindex="-1">
+@foreach ($banners as $banner)
+<div id="editModal{{ $banner->id }}" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <form class="modal-content" method="POST" action="#" enctype="multipart/form-data">
+        <form class="modal-content" method="POST" action="{{ route('banner.update', $banner->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="modal-header">
@@ -187,39 +234,35 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">শিরোনাম</label>
-                    <input type="text" name="title" id="editTitle" class="form-control" required>
+                    <input type="text" name="title" class="form-control" value="{{ $banner->title }}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">উপশিরোনাম</label>
-                    <textarea name="subtitle" id="editSubtitle" class="form-control" rows="2"></textarea>
+                    <textarea name="subtitle" class="form-control" rows="2">{{ $banner->subtitle }}</textarea>
                 </div>
                 <div class="row g-3 mb-3">
                     <div class="col-6">
                         <label class="form-label">বাটনের লেখা</label>
-                        <input type="text" name="button_text" id="editButton" class="form-control">
+                        <input type="text" name="button_text" class="form-control" value="{{ $banner->button_text }}">
                     </div>
                     <div class="col-6">
                         <label class="form-label">বাটনের লিংক</label>
-                        <input type="text" name="button_link" id="editLink" class="form-control">
+                        <input type="text" name="button_link" class="form-control" value="{{ $banner->button_link }}">
                     </div>
                 </div>
                 <div class="row g-3 mb-3">
                     <div class="col-6">
-                        <label class="form-label">ক্রম</label>
-                        <input type="number" name="sort_order" id="editOrder" class="form-control" min="0">
-                    </div>
-                    <div class="col-6">
                         <label class="form-label">স্ট্যাটাস</label>
-                        <select name="is_active" id="editStatus" class="form-select">
-                            <option value="1">সক্রিয়</option>
-                            <option value="0">নিষ্ক্রিয়</option>
+                        <select name="is_active" class="form-select" required>
+                            <option value="1" {{ $banner->is_active ? 'selected' : '' }}>সক্রিয়</option>
+                            <option value="0" {{ !$banner->is_active ? 'selected' : '' }}>নিষ্ক্রিয়</option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <label class="form-label">ছবি</label>
                     <div class="mb-2">
-                        <img id="editImage" src="https://placehold.co/120x60" alt="" class="rounded" style="width:120px;height:60px;object-fit:cover">
+                        <img src="{{ $banner->image }}" alt="" class="rounded" style="width:120px;height:60px;object-fit:cover">
                     </div>
                     <input type="file" name="image" class="form-control" accept="image/*">
                 </div>
@@ -231,12 +274,13 @@
         </form>
     </div>
 </div>
-
+@endforeach
 
 {{-- Delete Modal --}}
-<div class="modal fade" id="delModal" tabindex="-1">
+@foreach ($banners as $banner)
+<div class="modal fade" id="delModal{{ $banner->id }}" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-sm">
-        <form class="modal-content text-center p-3" method="POST" action="#">
+        <form class="modal-content text-center p-3" method="POST" action="{{ route('banner.destroy', $banner->id) }}">
             @csrf
             @method('DELETE')
             <i class="bi bi-trash fs-1 text-danger"></i>
@@ -248,35 +292,56 @@
         </form>
     </div>
 </div>
+@endforeach
 
 <script>
-document.addEventListener('show.bs.modal', function (e) {
-    var btn = e.relatedTarget;
-    if (!btn) return;
+    document.addEventListener('show.bs.modal', function(e) {
+        var btn = e.relatedTarget;
+        if (!btn) return;
 
-    if (e.target.id === 'viewModal') {
-        document.getElementById('viewTitle').textContent = btn.dataset.title;
-        document.getElementById('viewSubtitle').textContent = btn.dataset.subtitle;
-        document.getElementById('viewButton').textContent = btn.dataset.button;
-        document.getElementById('viewLink').textContent = btn.dataset.link;
-        document.getElementById('viewOrder').textContent = btn.dataset.order;
-        var st = document.getElementById('viewStatus');
-        st.textContent = btn.dataset.status;
-        st.className = 'badge ' + (btn.dataset.status === 'সক্রিয়' ? 'bg-success' : 'bg-secondary');
-        document.getElementById('viewImage').src = btn.dataset.image;
-    }
+        if (e.target.id === 'viewModal') {
+            document.getElementById('viewTitle').textContent = btn.dataset.title;
+            document.getElementById('viewSubtitle').textContent = btn.dataset.subtitle;
+            document.getElementById('viewButton').textContent = btn.dataset.button;
+            document.getElementById('viewLink').textContent = btn.dataset.link;
+            document.getElementById('viewOrder').textContent = btn.dataset.order;
+            var st = document.getElementById('viewStatus');
+            st.textContent = btn.dataset.status;
+            st.className = 'badge ' + (btn.dataset.status === 'সক্রিয়' ? 'bg-success' : 'bg-danger');
+            document.getElementById('viewImage').src = btn.dataset.image;
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
 
-    if (e.target.id === 'editModal') {
-        document.getElementById('editTitle').value = btn.dataset.title;
-        document.getElementById('editSubtitle').value = btn.dataset.subtitle;
-        document.getElementById('editButton').value = btn.dataset.button;
-        document.getElementById('editLink').value = btn.dataset.link;
-        document.getElementById('editOrder').value = btn.dataset.order;
-        document.getElementById('editStatus').value = btn.dataset.status;
-        document.getElementById('editImage').src = btn.dataset.image;
-    }
-});
+        const form = document.getElementById('bannerForm');
+        const imageInput = form.querySelector('input[name="image"]');
+        const imageError = form.querySelector('.image-error');
 
+        form.addEventListener('submit', function(e) {
+
+            imageError.textContent = '';
+            imageInput.classList.remove('is-invalid');
+
+            if (!imageInput.files.length) {
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                imageError.textContent = 'অনুগ্রহ করে ব্যানারের ছবি নির্বাচন করুন।';
+                imageInput.classList.add('is-invalid');
+
+            }
+
+        });
+
+        imageInput.addEventListener('change', function() {
+
+            imageError.textContent = '';
+            imageInput.classList.remove('is-invalid');
+
+        });
+
+    });
 </script>
 
 @endsection

@@ -1,0 +1,287 @@
+/* Laravel: ei 6 ta color settings table theke ashbe */
+    :root {
+      --primary: #352638;
+      --secondary: #B9A0A9;
+      --accent: #D5B77A;
+      --bg: #F2E9DB;
+      --olive: #65705A;
+      --text: #28252A;
+    }
+
+    body {
+      font-family: 'Poppins', 'Noto Sans Bengali', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .btn,
+    .badge {
+      font-family: 'Raleway', 'Noto Sans Bengali', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .bg-brand {
+      background: var(--primary) !important;
+    }
+
+    .bg-accent {
+      background: var(--accent) !important;
+    }
+
+    .text-brand {
+      color: var(--primary) !important;
+    }
+
+    .text-accent {
+      color: var(--accent) !important;
+    }
+
+    .border-sec {
+      border-color: var(--secondary) !important;
+    }
+
+    .btn-brand {
+      background: var(--primary);
+      color: var(--bg);
+      border: 1px solid var(--primary);
+    }
+
+    .btn-brand:hover {
+      background: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: var(--text);
+      border: 1px solid var(--accent);
+      font-weight: 600;
+    }
+
+    .btn-accent:hover {
+     background: var(--primary);
+      color: var(--bg);
+    }
+
+    .btn-outline-brand {
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+    }
+
+    .btn-outline-brand:hover,
+    .btn-outline-brand.active {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    .topbar {
+      background: var(--text);
+      color: var(--bg);
+      font-size: .8rem;
+    }
+
+    .main-nav {
+      background: var(--primary);
+    }
+
+    .links-nav {
+      background: var(--olive);
+    }
+
+    .links-nav a {
+      color: var(--bg);
+      text-decoration: none;
+      white-space: nowrap;
+      padding: .55rem 1rem;
+      display: inline-block;
+      font-size: .9rem;
+    }
+
+    .links-nav a:hover {
+      background: var(--primary);
+    }
+
+    .links-scroll {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      background: var(--accent);
+      color: var(--primary);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .search-box .form-control {
+      border: 0;
+    }
+
+    .lang-btn {
+      color: var(--bg);
+      border: 1px solid var(--secondary);
+      background: transparent;
+      font-size: .85rem;
+      padding: .3rem .6rem;
+      text-decoration: none;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: var(--text);
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Image background + solid overlay (no gradient, no animation) */
+    /* Image background + solid overlay */
+.img-bg {
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+   /* Solid overlay */
+.img-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0.65;
+}
+
+/* Content above overlay */
+.img-bg > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Carousel transition */
+.carousel-item {
+    transition: none;
+}
+
+    .banner-inner {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    .carousel-indicators [data-bs-target] {
+      background-color: var(--accent);
+    }
+
+    .banner-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--text);
+    }
+
+    .offer-card {
+      border-radius: .5rem;
+      overflow: hidden;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .card-box {
+      background: #fff;
+      border: 1px solid var(--secondary);
+      border-radius: .5rem;
+    }
+
+    .product-img {
+      height: 150px;
+      background: var(--bg);
+      border-radius: .4rem;
+      overflow: hidden;
+    }
+
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .thumb-sm {
+      width: 44px;
+      height: 44px;
+      border-radius: .3rem;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .cat-icon {
+      font-size: 2.2rem;
+    }
+
+    .feature-icon {
+      color: var(--olive);
+      font-size: 2rem;
+    }
+
+    .price {
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .badge-off {
+      background: var(--accent);
+      color: var(--text);
+    }
+
+    .stars {
+      color: var(--accent);
+    }
+
+    .wish-btn {
+      position: absolute;
+      top: .5rem;
+      right: .5rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--secondary);
+      background: #fff;
+      color: var(--primary);
+      z-index: 2;
+    }
