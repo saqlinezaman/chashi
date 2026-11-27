@@ -14,12 +14,12 @@
 
 <div class="card-box reveal">
     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 p-3 border-bottom">
-        <h2 class="h5 mb-0">ব্যানারের তালিকা</h2>
-        <form method="GET" class="d-flex gap-2">
-            <input type="search" name="q" class="form-control" style="max-width:240px" placeholder="ব্যানার খুঁজুন..." value="{{ request('q') }}">
-            <button class="btn btn-brand" type="submit"><i class="bi bi-search"></i></button>
-        </form>
+    <h2 class="h5 mb-0">ব্যানারের তালিকা</h2>
+    <div class="d-flex gap-2">
+        <input type="search" id="bannerSearch" class="form-control" style="max-width:240px" placeholder="ব্যানার খুঁজুন..." autocomplete="off">
+        <button class="btn btn-brand" type="button" id="searchBtn"><i class="bi bi-search"></i></button>
     </div>
+</div>
 
     <div class="table-responsive">
         <table class="table align-middle mb-0">
@@ -33,7 +33,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody id="bannerTableBody">
 
                 @foreach ($banners as $banner)
                 <tr>
@@ -277,6 +277,7 @@
 @endforeach
 
 {{-- Delete Modal --}}
+
 @foreach ($banners as $banner)
 <div class="modal fade" id="delModal{{ $banner->id }}" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -342,6 +343,42 @@
         });
 
     });
+    document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('bannerSearch');
+    const tbody = document.getElementById('bannerTableBody');
+    const btn = document.getElementById('searchBtn');
+
+    if (!input || !tbody) {
+        console.error('Search: input ba tbody paoa jay nai', input, tbody);
+        return;
+    }
+
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    const noResult = document.createElement('tr');
+    noResult.style.display = 'none';
+    noResult.innerHTML = '<td colspan="5" class="text-center text-secondary py-4">কোনো ব্যানার পাওয়া যায়নি।</td>';
+    tbody.appendChild(noResult);
+
+    input.addEventListener('input', function () {
+        const keyword = this.value.trim().toLowerCase();
+        let visible = 0;
+
+        rows.forEach(function (row) {
+            const match = row.textContent.toLowerCase().includes(keyword);
+            row.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+
+        noResult.style.display = visible === 0 ? '' : 'none';
+    });
+
+    if (btn) {
+        btn.addEventListener('click', function () {
+            input.focus();
+        });
+    }
+});
 </script>
 
 @endsection

@@ -19,8 +19,8 @@
     <nav>
       <a href="{{route('index')}}" class="nav-i {{request()->routeIs('index') ? 'active': ''}} "><i class="bi bi-speedometer2"></i>ড্যাশবোর্ড</a>
       <a href="{{route('banner')}}" data-route="banners" class="nav-i {{request()->routeIs('banner') ? 'active': ''}} "><i class="bi bi-images"></i>ব্যানার</a>
+      <a href="{{route('categories')}}" data-route="categories" class="nav-i {{request()->routeIs('categories') ? 'active': ''}} "><i class="bi bi-grid"></i>ক্যাটাগরি</a>
       <a href="{{route('product')}}" data-route="products" class="nav-i {{request()->routeIs('product') ? 'active': ''}} "><i class="bi bi-box-seam"></i>পণ্য</a>
-      <a href="#" data-route="categories" class="nav-i"><i class="bi bi-grid"></i>ক্যাটাগরি</a>
       <a href="#" data-route="orders" class="nav-i"><i class="bi bi-receipt"></i>অর্ডার</a>
       <a href="#" data-route="offers" class="nav-i"><i class="bi bi-megaphone"></i>অফার</a>
       <a href="#" data-route="reviews" class="nav-i"><i class="bi bi-chat-quote"></i>রিভিউ</a>
@@ -72,6 +72,8 @@
       }, 150));
     });
   </script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

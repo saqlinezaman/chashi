@@ -82,7 +82,7 @@
     <div id="bannerCarousel"
       class="carousel slide position-relative"
       data-bs-ride="carousel"
-      data-bs-interval="5000">
+      data-bs-interval="2500">
 
 
       <div class="carousel-indicators">
@@ -138,37 +138,35 @@
   </section>
   <!-- ================= CATEGORIES =================
      Laravel: categories loop korbe -->
-  <section id="categories" class="py-4">
-    <div class="container">
-      <h2 class="mb-4">ক্যাটাগরি অনুযায়ী কিনুন</h2>
-      <div class="row g-3">
-        <div class="col-6 col-md-4 col-lg-2"><a href="?category=oil#products" class="btn btn-outline-brand bg-white w-100 py-3">
-            <div class="cat-icon">🛢️</div>
-            <div class="fw-semibold">তেল</div>
-          </a></div>
-        <div class="col-6 col-md-4 col-lg-2"><a href="?category=soap#products" class="btn btn-outline-brand bg-white w-100 py-3">
-            <div class="cat-icon">🧼</div>
-            <div class="fw-semibold">সাবান/ক্লিনিং</div>
-          </a></div>
-        <div class="col-6 col-md-4 col-lg-2"><a href="?category=grain#products" class="btn btn-outline-brand bg-white w-100 py-3">
-            <div class="cat-icon">🍚</div>
-            <div class="fw-semibold">চাল-ডাল</div>
-          </a></div>
-        <div class="col-6 col-md-4 col-lg-2"><a href="?category=spice#products" class="btn btn-outline-brand bg-white w-100 py-3">
-            <div class="cat-icon">🌶️</div>
-            <div class="fw-semibold">মসলা</div>
-          </a></div>
-        <div class="col-6 col-md-4 col-lg-2"><a href="?category=snack#products" class="btn btn-outline-brand bg-white w-100 py-3">
-            <div class="cat-icon">🍪</div>
-            <div class="fw-semibold">চা-নাস্তা</div>
-          </a></div>
-        <div class="col-6 col-md-4 col-lg-2"><a href="?category=daily#products" class="btn btn-outline-brand bg-white w-100 py-3">
-            <div class="cat-icon">🥚</div>
-            <div class="fw-semibold">দৈনন্দিন</div>
-          </a></div>
+ <section id="categories" class="py-4">
+  <div class="container">
+    <h2 class="mb-4">ক্যাটাগরি অনুযায়ী কিনুন</h2>
+
+    <div class="cat-wrap position-relative">
+      <div class="cat-viewport" id="catViewport">
+        <div class="cat-track" id="catTrack">
+          @foreach ($categories as $category)
+            <div class="cat-slide">
+              <a href="?category={{ $category->slug }}#products" class="cat-item">
+                <div class="cat-box">
+                  <img src="{{ asset($category->image) }}" alt="{{ $category->title }}">
+                </div>
+                <div class="cat-name">{{ $category->title }}</div>
+              </a>
+            </div>
+          @endforeach
+        </div>
       </div>
+
+      <button class="cat-nav cat-prev" type="button" id="catPrev" aria-label="Previous">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="cat-nav cat-next" type="button" id="catNext" aria-label="Next">
+        <i class="bi bi-chevron-right"></i>
+      </button>
     </div>
-  </section>
+  </div>
+</section>
   <!-- ================= FEATURES ================= -->
   <section class="py-4 bg-white border-bottom border-sec">
     <div class="container">
@@ -635,6 +633,80 @@
 
     renderCart();
     renderWish();
+  document.addEventListener('DOMContentLoaded', function () {
+    const track = document.getElementById('catTrack');
+    const viewport = document.getElementById('catViewport');
+    const prevBtn = document.getElementById('catPrev');
+    const nextBtn = document.getElementById('catNext');
+    if (!track) return;
+
+    const originals = Array.from(track.children);
+    const total = originals.length;
+    const INTERVAL = 2000;
+    const SPEED = 500;
+
+    function perView() {
+        const w = window.innerWidth;
+        if (w <= 575) return 3;
+        if (w <= 991) return 4;
+        return 5;
+    }
+
+    // Slide kom hole slider-er dorkar nai
+    if (total <= perView()) {
+        prevBtn.style.display = nextBtn.style.display = 'none';
+        return;
+    }
+
+    // Shuru-te ar shesh-e clone, jate dui dik theke seamless loop hoy
+    const CLONES = 6; // max perView (5) er cheye beshi
+    const n = Math.min(CLONES, total);
+    for (let i = 0; i < n; i++) {
+        track.appendChild(originals[i].cloneNode(true));
+        track.insertBefore(originals[total - 1 - i].cloneNode(true), track.firstChild);
+    }
+
+    let index = n;           // clone-er por real 1st item
+    let busy = false;
+    let timer;
+
+    function slideW() {
+        return track.children[0].getBoundingClientRect().width;
+    }
+
+    function setPos(animate) {
+        track.style.transition = animate ? 'transform ' + SPEED + 'ms ease' : 'none';
+        track.style.transform = 'translateX(' + (-index * slideW()) + 'px)';
+    }
+
+    function go(dir) {
+        if (busy) return;
+        busy = true;
+        index += dir;
+        setPos(true);
+    }
+
+    track.addEventListener('transitionend', function () {
+        // Clone-e pouchhe gele chupchap real item-e jump
+        if (index >= n + total) index = n;
+        if (index < n) index = n + total - 1;
+        setPos(false);
+        busy = false;
+    });
+
+    function start() { stop(); timer = setInterval(function () { go(1); }, INTERVAL); }
+    function stop()  { clearInterval(timer); }
+
+    nextBtn.addEventListener('click', function () { go(1); start(); });
+    prevBtn.addEventListener('click', function () { go(-1); start(); });
+
+    viewport.addEventListener('mouseenter', stop);
+    viewport.addEventListener('mouseleave', start);
+    window.addEventListener('resize', function () { setPos(false); });
+
+    setPos(false);
+    start();
+});
   </script>
 </body>
 
